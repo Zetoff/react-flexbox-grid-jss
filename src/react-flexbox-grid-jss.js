@@ -11,15 +11,18 @@
 import Container from './Container.jsx';
 import ContainerFluid from './ContainerFluid.jsx';
 import Row from './Row.jsx';
+import Col from './Col.jsx';
 
 export {
   Container,
   ContainerFluid,
   Row,
+  Col,
 };
 
 export default {
   Container,
   ContainerFluid,
   Row,
+  Col,
 }

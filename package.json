@@ -57,6 +57,8 @@
     "mainVarName": "Grid"
   },
   "dependencies": {
+    "classnames": "^2.2.5",
+    "lodash": "^4.17.4",
     "react": "^15.4.2",
     "react-jss": "^5.4.0"
   }
