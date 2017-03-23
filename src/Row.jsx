@@ -9,6 +9,7 @@
 
 import React from 'react';
 import injectSheet from 'react-jss';
+import classNames from 'classnames';
 
 // Define base style
 const styles = {
@@ -30,13 +31,7 @@ const styles = {
       { display: '-webkit-box' },
       { display: '-ms-flex' },
     ],
-  },
-};
-
-// Conditional styles
-const otherStyles = {
-  row: {
-    reverse: {
+    '&.reverse': {
       WebkitBoxOrient: 'horizontal',
       WebkitBoxDirection: 'reverse',
       MsFlexDirection: 'row-reverse',
@@ -45,21 +40,20 @@ const otherStyles = {
   },
 };
 
-class Container extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    // if (props.reverse) {
-    //   styles.row = { ...styles.row, ...otherStyles.row.reverse };
-    // }
-  }
-
+class Row extends React.PureComponent {
   render() {
+    const {classes, reverse} = this.props;
+    console.log('reverse: ', reverse);
+    console.log(classes);
     return (
-      <div className={this.props.classes.row}>
+      <div className={classNames({
+        [classes.row]: true,
+        ['reverse']: reverse,
+      })}>
         {this.props.children}
       </div>
     );
   }
 }
 
-export default injectSheet(styles)(Container);
+export default injectSheet(styles)(Row);

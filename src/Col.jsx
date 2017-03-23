@@ -14,7 +14,13 @@ import classNames from 'classnames';
 
 
 const curryCalcPercentage = (totalColumns) => {
-  return (columns) => (`${columns/totalColumns}%`);
+  return (columns) => {
+    if (_.isNumber(columns)){
+      return `${(columns/totalColumns)*100}%`;
+    } else {
+      return 'none';
+    }
+  };
 };
 const calcPercentage = curryCalcPercentage(12);
 
@@ -48,7 +54,7 @@ const styles = {
     maxWidth: props => calcPercentage(props.xs),
   },
   xsOffset: {
-    marginLeft: calcPercentage(props.xsOffset),
+    marginLeft: props => calcPercentage(props.xsOffset),
   },
   sm: {
     '@media only screen and (min-width: 48em)':{ // TODO extract limits to constants
@@ -71,9 +77,9 @@ const styles = {
   },
   mdOffset: {
     '@media only screen and (min-width: 64em)': { // TODO extract limits to constants
-      marginLeft: calcPercentage(props.mdOffset),
+      marginLeft: props => calcPercentage(props.mdOffset),
+    },
   },
-},
   lg: {
     '@media only screen and (min-width: 75em)': { // TODO extract limits to constants
       MsFlexPreferredSize: props => calcPercentage(props.lg),
@@ -83,7 +89,7 @@ const styles = {
   },
   lgOffset: {
     '@media only screen and (min-width: 75em)': { // TODO extract limits to constants
-      marginLeft: calcPercentage(props.lgOffset),
+      marginLeft: props => calcPercentage(props.lgOffset),
     },
   },
 }
@@ -91,23 +97,20 @@ const styles = {
 class Col extends React.PureComponent {
 
   render() {
-    const {reverse, xs, xsOffset, sm, smOffset, md, mdOffset, lg, lgOffset} = this.props;
+    const {classes, reverse, xs, xsOffset, sm, smOffset, md, mdOffset, lg, lgOffset} = this.props;
     return (
       <div className={classNames({
         [classes.col]: true,
         ['reverse']: reverse,
-        [classes.xs.noWidth]: !_.isNumber(xs), // FIXME improve logic
-        [classes.xs.width]: _.isNumber(xs),
-        [classes.xs.offset]: _.isNumber(xsOffset),
-        [classes.sm.noWidth]: !_.isNumber(sm), // FIXME improve logic
-        [classes.sm.width]: _.isNumber(sm),
-        [classes.sm.offset]: _.isNumber(smOffset),
-        [classes.md.noWidth]: !_.isNumber(md), // FIXME improve logic
-        [classes.md.width]: _.isNumber(md),
-        [classes.md.offset]: _.isNumber(mdOffset),
-        [classes.lg.noWidth]: !_.isNumber(lg), // FIXME improve logic
-        [classes.lg.width]: _.isNumber(lg),
-        [classes.lg.offset]: _.isNumber(lgOffset),
+        [classes.noWidth]: !_.isNumber(xs), // FIXME improve logic
+        [classes.xs]: _.isNumber(xs),
+        [classes.xsOffset]: _.isNumber(xsOffset),
+        [classes.sm]: _.isNumber(sm),
+        [classes.smOffset]: _.isNumber(smOffset),
+        [classes.md]: _.isNumber(md),
+        [classes.mdOffset]: _.isNumber(mdOffset),
+        [classes.lg]: _.isNumber(lg),
+        [classes.lgOffset]: _.isNumber(lgOffset),
       })}>
         {this.props.children}
       </div>
